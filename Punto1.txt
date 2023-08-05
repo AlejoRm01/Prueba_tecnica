@@ -1,0 +1,61 @@
+El funcionamiento de estos scripts se pueden probar en el siguiente enlace:
+
+https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_all
+
+
+
+Punto 1A
+
+Consulte el nombre del empleado que nacieron en 1960 y 1963 y que atendieron las 
+ordenes de las personas de México, USA, Venezuela y argentina.
+
+SELECT DISTINCT
+    e.FirstName
+FROM
+    Employees e
+JOIN
+    Orders o ON e.EmployeeID = o.EmployeeID
+JOIN
+    Customers c ON o.CustomerID = c.CustomerID
+WHERE
+    (e.BirthDate BETWEEN '1960-01-01' AND '1960-12-31'
+    OR e.BirthDate BETWEEN '1963-01-01' AND '1963-12-31')
+    AND c.Country IN ('Mexico', 'USA', 'Venezuela', 'Argentina');
+
+
+Punto 1B
+
+Agrupe los productos por el país de origen (país del proveedor) y establezca el precio 
+total que se pagó a cada país.
+
+SELECT
+	s.Country AS CountryOfOrigin, SUM(p.Price * od.Quantity) AS TotalPrice
+FROM 
+	OrderDetails od
+JOIN 
+	Products p ON od.ProductID = p.ProductID
+JOIN 
+	Suppliers s ON p.SupplierID = s.SupplierID
+GROUP BY 
+	s.Country;
+
+
+Punto 1C
+
+Determine la empresa de transporte que transportó el tofu y el NuNuCa Nuß-Nougat-Creme
+y cuantas unidades transportó de cada uno.
+
+SELECT 
+	S.ShipperName, 
+	OD.Quantity AS UnitsTransported, 
+	P.ProductName
+FROM
+	Shippers AS S
+JOIN 
+	Orders AS O ON S.ShipperID = O.ShipperID
+JOIN 
+	OrderDetails AS OD ON O.OrderID = OD.OrderID
+JOIN 
+	Products AS P ON OD.ProductID = P.ProductID
+WHERE 
+	P.ProductName IN ('Tofu', 'NuNuCa Nuß-Nougat-Creme');
