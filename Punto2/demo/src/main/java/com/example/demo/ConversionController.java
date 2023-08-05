@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class ConversionController {
 
     @GetMapping()
-    public ResponseEntity<Map<String, Double>> convertMetersToKilometers(@RequestParam double metros) {
+    public ResponseEntity<Map<String, Double>> convertirMetrosAKilometros(@RequestParam double metros) {
         double kilometros = metros / 1000.0;
 
-        Map<String, Double> response = new HashMap<>();
-        response.put("metros", metros);
-        response.put("kilometros", kilometros);
+        Map<String, Double> respuesta = new HashMap<>();
+        respuesta.put("metros", metros);
+        respuesta.put("kilometros", kilometros);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(respuesta);
     }
 }
